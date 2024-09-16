@@ -27,7 +27,7 @@
 
 # Technical Diagram
 
-![Technical Diagram](:/TechnicalDiagram.png)
+![Technical Diagram](:TechnicalDiagram/TechnicalDiagram.png)
 
 <br>
 
