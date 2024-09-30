@@ -41,38 +41,18 @@ bool MyApp::OnInit()
 }
 
 MyFrame::MyFrame()
-    :wxFrame(nullptr, wxID_ANY, app_name)
+    :wxFrame(nullptr, wxID_ANY, app_name, wxDefaultPosition, wxSize(600, 400))
 {
-    wxPanel* parent_panel = new wxPanel(this, wxID_ANY);
+    wxPanel* picture_panel = new wxPanel(this, wxID_ANY);
+    wxPanel* slider_panel = new wxPanel(this, wxID_ANY);
 
-    wxPanel* picture_panel = new wxPanel(parent_panel, wxID_ANY);
-    wxImage image(wxT(image_path), wxBITMAP_TYPE_PNG);
-    if (!image.IsOk())
-    {
-    wxMessageBox("Failded to load image!", "Error", wxICON_ERROR);
-    }
-    
-    wxBitmap bitmap(image);
-    if (!bitmap.IsOk())
-    {
-    wxMessageBox("Failed to load image!", "Error", wxICON_ERROR);
-    }
-
-    wxStaticBitmap* imageDisplay = new wxStaticBitmap(picture_panel, wxID_ANY, bitmap);
-    wxBoxSizer* photo_sizer = new wxBoxSizer(wxVERTICAL);
-    photo_sizer->Add(imageDisplay, 1, wxCENTER | wxALL, 10);
-    picture_panel->SetSizer(photo_sizer);
-    parent_panel->Fit();
-
-    wxPanel* slider_panel = new wxPanel(parent_panel, wxID_ANY);
-
-    wxStaticText* slider_text = 
-        new wxStaticText(slider_panel, wxID_ANY, "slider_panel");
+    picture_panel->SetBackgroundColour(wxColour(0, 255, 0));
+    slider_panel->SetBackgroundColour(wxColour(0, 0, 255));
 
     wxBoxSizer* hbox = new wxBoxSizer(wxHORIZONTAL);
 
-    hbox->Add(picture_panel, 1, wxEXPAND | wxALL, 10);
+    hbox->Add(picture_panel, 3, wxEXPAND | wxALL, 10);
     hbox->Add(slider_panel, 1, wxEXPAND | wxALL, 10);
 
-    parent_panel->SetSizer(hbox);
+    this->SetSizer(hbox);
 }
