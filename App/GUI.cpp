@@ -5,7 +5,6 @@ GUI.cpp
 #include <wx/wx.h>
 #include <wx/sizer.h>
 #include <wx/statbmp.h>
-#include <wx/image.h>
 #include <iostream>
 
 std::string app_name = "Photo Editing Software";
@@ -46,8 +45,21 @@ MyFrame::MyFrame()
     wxPanel* picture_panel = new wxPanel(this, wxID_ANY);
     wxPanel* slider_panel = new wxPanel(this, wxID_ANY);
 
-    picture_panel->SetBackgroundColour(wxColour(0, 255, 0));
-    slider_panel->SetBackgroundColour(wxColour(0, 0, 255));
+    wxImage image("/Users/andrewcarlson/Documents/School/Graphics/graphicsProject/Images/frog.jpg", wxBITMAP_TYPE_ANY);
+    wxStaticBitmap* bitmap = new wxStaticBitmap(picture_panel, wxID_ANY, 
+                                        wxBitmap(image), wxPoint(10, 10));
+
+    wxBoxSizer* vSizer = new wxBoxSizer(wxVERTICAL);
+
+    wxSlider* slider1 = new wxSlider(slider_panel, wxID_ANY, 50, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL | wxSL_LABELS);
+    wxSlider* slider2 = new wxSlider(slider_panel, wxID_ANY, 50, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL | wxSL_LABELS);  
+    wxSlider* slider3 = new wxSlider(slider_panel, wxID_ANY, 50, 0, 100, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL | wxSL_LABELS);
+
+    vSizer->Add(slider1, 1, wxALL | wxEXPAND, 5);
+    vSizer->Add(slider2, 1, wxALL | wxEXPAND, 5);
+    vSizer->Add(slider3, 1, wxALL | wxEXPAND, 5);
+
+    slider_panel->SetSizer(vSizer);
 
     wxBoxSizer* hbox = new wxBoxSizer(wxHORIZONTAL);
 
