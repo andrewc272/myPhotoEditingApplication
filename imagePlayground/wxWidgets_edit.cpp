@@ -47,7 +47,14 @@ MyFrame::MyFrame(const wxString& title)
                 unsigned char g = image.GetGreen(x, y);
                 unsigned char b = image.GetBlue(x, y);
 
-                int average = (0.25 * r) + (0.75 * g) + (0.25 * b);
+                int average = (0.21 * r) + (0.72 * g) + (0.07 * b);
+
+                if ( average > 255 ) {
+                    average = 255;
+                }
+                else if ( average < 0 ) {
+                    average = 0;
+                }
 
                 // Invert colors
                 image.SetRGB(x, y, average, average, average);

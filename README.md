@@ -22,6 +22,7 @@
     - General Google Searches
     - Observation of other similar programs like "Lightroom" and "Raw-Tharapee" to compare and test.
     - [Photographer Interviews](https://docs.google.com/spreadsheets/d/1BxnQ60syuqs3VMV5TVaQ_rpX9EweZFS1FjK5ldPvxi4/edit?usp=sharing)
+    - 
 
 <br>
 
