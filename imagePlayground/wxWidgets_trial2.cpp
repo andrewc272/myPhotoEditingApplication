@@ -58,7 +58,7 @@ ImageEditorFrame::ImageEditorFrame(const wxString& title)
     wxBoxSizer* leftSizer = new wxBoxSizer(wxVERTICAL);
 
     // Load an image (replace "image.jpg" with your image path)
-    originalImage.LoadFile("images/frog.jpg");
+    originalImage.LoadFile("images/color.jpg");
     adjustedImage = originalImage.Copy(); // Make a copy for editing
     imageDisplay = new wxStaticBitmap(leftPanel, wxID_ANY, wxBitmap(adjustedImage));
 
@@ -71,7 +71,7 @@ ImageEditorFrame::ImageEditorFrame(const wxString& title)
 
     // Hue slider
     wxStaticText* hueLabel = new wxStaticText(rightPanel, wxID_ANY, "Hue");
-    hueSlider = new wxSlider(rightPanel, wxID_ANY, 50, 0, 100);
+    hueSlider = new wxSlider(rightPanel, wxID_ANY, 0, 0, 100);
     rightSizer->Add(hueLabel, 0, wxTOP | wxLEFT | wxRIGHT, 10);
     rightSizer->Add(hueSlider, 0, wxEXPAND | wxALL, 10);
 
@@ -99,8 +99,8 @@ ImageEditorFrame::ImageEditorFrame(const wxString& title)
     rightPanel->SetSizer(rightSizer);
 
     // Add both panels to the main sizer
-    mainSizer->Add(leftPanel, 1, wxEXPAND | wxALL, 10);
-    mainSizer->Add(rightPanel, 0, wxEXPAND | wxALL, 10);
+    mainSizer->Add(leftPanel, 3, wxEXPAND | wxALL, 10);
+    mainSizer->Add(rightPanel, 1, wxEXPAND | wxALL, 10);
 
     SetSizer(mainSizer);
     Centre();
@@ -129,14 +129,16 @@ void ImageEditorFrame::UpdateImage()
     // Get slider values
     float hue = hueSlider->GetValue() / 100.0;
     float saturation = (saturationSlider->GetValue() / 50.0) - 1;
-    saturation = saturation*saturation*saturation;
+    if (saturation > 0) saturation = saturation * saturation;
+    else if (saturation < 0) saturation = -1 * saturation * saturation;
     float value = (valueSlider->GetValue() / 50.0) - 1;
-    value = value * value * value;
+    if (value > 0) value = value * value;
+    else if (value < 0) value = -1.0 * value * value;
 
-    std::cout << "Hue: " << static_cast<float>(hue) << ", "
+    /*std::cout << "Hue: " << static_cast<float>(hue) << ", "
                       << "Saturation: " << static_cast<float>(saturation) << ", "
                       << "Value: " << static_cast<float>(value) << std::endl;
-        std::cout << "\n";
+        std::cout << "\n";*/
 
     for (int x = 0; x < adjustedImage.GetWidth(); x++){
     for (int y = 0; y < adjustedImage.GetHeight(); y++){
@@ -192,7 +194,9 @@ void ImageEditorFrame::UpdateImage()
         }
 
         //hsv manipulation
-        // h = hue;
+        h = h + hue;
+	while(h < 0.0) h = h + 1.0;
+	while(h > 1.0) h = h - 1.0;
 
         // saturation
         if ( saturation > 0.0 && saturation <= 1.0 ){
